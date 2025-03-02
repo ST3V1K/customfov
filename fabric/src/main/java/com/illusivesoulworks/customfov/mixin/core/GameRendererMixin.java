@@ -29,9 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = GameRenderer.class, priority = 1500)
 public class GameRendererMixin {
 
-  @Inject(at = @At("TAIL"), method = "getFov", cancellable = true)
-  private void customfov$getFov(Camera camera, float partialTicks, boolean useFovSetting,
-                                CallbackInfoReturnable<Double> cb) {
-    CustomFovMod.computeFov(camera, cb.getReturnValue()).ifPresent(cb::setReturnValue);
-  }
+    @Inject(at = @At("TAIL"), method = "getFov", cancellable = true)
+    private void customfov$getFov(Camera camera, float partialTicks, boolean useFovSetting,
+                                  CallbackInfoReturnable<Float> cb) {
+        CustomFovMod.computeFov(camera, (double) cb.getReturnValue())
+                .ifPresent(d -> cb.setReturnValue(d.floatValue()));
+    }
 }

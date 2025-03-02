@@ -27,15 +27,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(value = AbstractClientPlayer.class, priority = 100)
 public class PreAbstractClientPlayerMixin {
 
-  @ModifyVariable(
-      at = @At(
-          value = "INVOKE",
-          target = "net/minecraft/client/Options.fovEffectScale()Lnet/minecraft/client/OptionInstance;"
-      ),
-      method = "getFieldOfViewModifier",
-      ordinal = 0
-  )
-  private float customfov$getFieldOfViewModifier(float fovModifier) {
-    return CustomFovMod.preComputeFovModifier(fovModifier, false);
-  }
+    @ModifyVariable(
+            at = @At("HEAD"),
+            method = "getFieldOfViewModifier",
+            argsOnly = true
+    )
+    private float customfov$getFieldOfViewModifier(float fovModifier) {
+        return CustomFovMod.preComputeFovModifier(fovModifier, false);
+    }
 }

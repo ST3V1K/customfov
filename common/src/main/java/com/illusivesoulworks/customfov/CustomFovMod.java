@@ -134,7 +134,7 @@ public class CustomFovMod {
 
     if (scale) {
       result =
-          (float) Mth.lerp(Minecraft.getInstance().options.fovEffectScale().get(), 1.0F, result);
+              Mth.lerp(Minecraft.getInstance().options.fovEffectScale().get().floatValue(), 1.0F, result);
     }
     return result;
   }
